@@ -1,4 +1,3 @@
-import _ from "lodash";
 class Colours {
   constructor() {
     this.reset();
@@ -392,19 +391,25 @@ class Elektu {
       return array;
     };
     const shuffleTouchList = () => {
-      const target = _.minBy(this.touches, (touch) => {
-        return touch.y;
+      let target = {};
+      target.y = 1000;
+
+      this.touches.forEach((touch) => {
+        console.log(touch);
+        if (Number(touch.y) < target.y) {
+          target.y = Number(touch.y);
+        }
       });
 
       this.touches = this.touches.filter((touch) => {
-        if (touch.y === target.y) {
+        if (Number(touch.y) === Number(target.y)) {
+          return true;
+        } else {
           return false;
         }
-        return true;
       });
 
       const playerList = [...this.touches].map((t) => t.id);
-      //   const playerList =
       return shuffleArray(playerList);
     };
     const selectPlayers = (numberToSelect) => {

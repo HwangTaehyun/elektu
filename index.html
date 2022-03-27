@@ -21,7 +21,8 @@
         <link rel="prefetch" href="./img/select-unchecked.svg" />
         <link rel="prefetch" href="./img/vibration-checked.svg" />
         <link rel="prefetch" href="./img/vibration-unchecked.svg" />
-        <script type="module" src="elektu.min.js"></script>
+        <!-- <script src="elektu.min.js"></script> -->
+        <script src="elektu.min.js"></script>
         <link rel="stylesheet" type="text/css" href="style.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/screenfull.js/3.3.3/screenfull.min.js"></script>
         <script data-goatcounter="https://elektu.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
@@ -225,7 +226,6 @@ const start = () => {
         toggleVibration.addEventListener("change", updateVibration);
         elektu.setVibrate(toggleVibration.checked);
     }
-    elektu.setVibrate(true);
 
     if(screenfull.enabled) {
         toggleFullscreen.addEventListener("change", requestFullscreenChange);
