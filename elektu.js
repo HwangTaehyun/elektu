@@ -4,14 +4,32 @@ class Colours {
   }
   reset() {
     this.colour = [
-      "#E63AAE",
-      "#038FB3",
-      "#F9E159",
-      "#FE7F00",
-      "#C73ADB",
-      "#8EC23B",
+      "#E73AAF",
+      "#0491b3",
       "#E6E6E6",
+      "#FF7F00",
+      "#C93ADD",
+      "#FAE259",
+      "#8EC43C",
     ];
+    this.timeoutColour = [
+      "#E768BE",
+      "#65c4db",
+      "#FFFFFF",
+      "#FFB873",
+      "#CD65DD",
+      "#FEF2A5",
+      "#99FF00",
+    ];
+    this.colourMap = {
+      [this.colour[0]]: this.timeoutColour[0],
+      [this.colour[1]]: this.timeoutColour[1],
+      [this.colour[2]]: this.timeoutColour[2],
+      [this.colour[3]]: this.timeoutColour[3],
+      [this.colour[4]]: this.timeoutColour[4],
+      [this.colour[5]]: this.timeoutColour[5],
+      [this.colour[6]]: this.timeoutColour[6],
+    };
   }
   getNoTeamColour() {
     return "#C0C0C0"; // you go Glenn
@@ -107,10 +125,10 @@ class PlayerTouch {
         this.step++;
         if (this.step >= 4) {
           this.step = 0;
-          if (this.radius <= 37) {
-            this.grow = 0.5;
-          } else if (this.radius >= 42) {
-            this.grow = -0.5;
+          if (this.radius <= 30) {
+            this.grow = 8;
+          } else if (this.radius >= 60) {
+            this.grow = -8;
           }
           this.radius += this.grow;
         }
@@ -171,16 +189,18 @@ class PlayerTouch {
       ctx.fillText(this.number, this.x, this.y - 65);
     }
     if (this.timeoutStarted !== -1) {
-      ctx.strokeStyle = this.timeoutColor;
+      ctx.fillStyle = new Colours().colourMap[this.colour];
+      ctx.strokeStyle = ctx.fillStyle;
       ctx.beginPath();
       ctx.arc(
         this.x,
         this.y,
-        this.radius + 4,
+        this.radius + 12,
         this.timeoutCircleStartAngle,
         this.timeoutCircleEndAngle
       );
-      ctx.lineWidth = 9;
+      // ctx.lineWidth = 9;
+      ctx.lineWidth = this.outerCircleStrokeWidth;
       ctx.stroke();
       ctx.closePath();
     }
@@ -245,7 +265,7 @@ class Elektu {
 
     this.timerTrigger = -1;
     this.displayTimeout = 1500;
-    this.triggerTimeout = 2500;
+    this.triggerTimeout = 5000;
     this.finishTouchEnd = this.handleFinishTouchEnd.bind(this);
     this.touchEnd = this.handleTouchEnd.bind(this);
     this.newTouch = this.handleNewTouch.bind(this);
@@ -281,6 +301,8 @@ class Elektu {
     this.vibrate = vibrate;
   }
   setSelectedNumber(number) {
+    console.log("setSelectedNumber is called");
+    console.log(number);
     this.selectedNumber = number;
   }
   areAllTouchesLocked() {
